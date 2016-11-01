@@ -25,7 +25,7 @@ from shortener.views import kirr_redirect_FBV, KirrRedirectCBView, test_view  # 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^about123/$', test_view),
-    url(r'^a/(?P<shortcode>[\w-]+){6,15}$', kirr_redirect_FBV),
+    url(r'^(?P<shortcode>[\w-]+){6,15}$', kirr_redirect_FBV),
     url(r'^b/(?P<shortcode>[\w-]+){6,15}$', KirrRedirectCBView.as_view()),
         # refer https://github.com/codingforentrepreneurs/Guides/blob/master/all/common_url_regex.md
 

@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '5#q4q)cf$c!bjhy(fa@sf$cz=o#csv19@=sz+w-xzxa1@g82#t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['tirr.com', 'www.tirr.com', 'www.kirr.co', 'kirr.co']
 
@@ -37,12 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    #third party apps
+    'django_hosts',
     #custom apps
     'shortener',
 ]
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',  #django-hosts
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,9 +52,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware',  #django-hosts
 ]
 
 ROOT_URLCONF = 'kirr.urls'
+ROOT_HOSTCONF = 'kirr.hosts' # for django hosts
+DEFAULT_HOST = 'www'
+DEFAULT_REDIRECT_URL = 'http://www.tirr.com:8000'  #later kirr.co
 
 TEMPLATES = [
     {
