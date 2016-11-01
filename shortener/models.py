@@ -1,20 +1,10 @@
 from django.db import models
-import random
-import string
 # Create your models here.
-
-# method to generate string of random 6 characters
-def code_generator(size=6, chars=string.ascii_lowercase + string.digits):
-    # equivalent for loop would be
-    # for _ in range(size):
-    #     new_code += random.choice(chars)
-    # return new_code
-    return ''.join(random.choice(chars) for _ in range(size))
-
+from .utils import code_generator, create_shortcode
 
 class KirrURL(models.Model):
     url = models.CharField(max_length=220,)
-    shortcode = models.CharField(max_length=15, unique=True)
+    shortcode = models.CharField(max_length=15, unique=True, blank=True)
     updated = models.DateTimeField(auto_now=True) #everytime when model is last saved
     timestamp = models.DateTimeField(auto_now_add=True) #when model was created
 
@@ -22,8 +12,9 @@ class KirrURL(models.Model):
 
     #over-riding inbuilt save method
     def save(self, *args, **kwargs):
-        print ("something")
-        self.shortcode = code_generator()
+        # print ("something")
+        if self.shortcode is None or self.shortcode == "":
+            self.shortcode = create_shortcode(self)
         super(KirrURL, self).save(*args, **kwargs)
 
     def __str__(self):
