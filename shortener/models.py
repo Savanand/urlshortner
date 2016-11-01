@@ -2,14 +2,34 @@ from django.db import models
 # Create your models here.
 from .utils import code_generator, create_shortcode
 
+
+class KirrURLManager(models.Manager):
+    def all(self, *args, **kwargs):
+        qs_main = super(KirrURLManager, self).all(*args, **kwargs)
+        qs= qs_main.filter(active=True)
+        return qs
+
+    def refresh_shortcodes(self):
+        qs = KirrURL.objects.filter(id__gte=1)
+        new_codes_count = 0
+        for q in qs:
+            q.shortcode = create_shortcode(q)
+            print (q.shortcode)
+            q.save()
+            new_codes_count += 1;
+        return "new codes ready {i}".format(i=new_codes_count)
+
+
 class KirrURL(models.Model):
     url = models.CharField(max_length=220,)
-    shortcode = models.CharField(max_length=15, unique=True, blank=True)
+    shortcode = models.CharField(max_length=15, default='abc', unique=True, blank=True)
     updated = models.DateTimeField(auto_now=True) #everytime when model is last saved
     timestamp = models.DateTimeField(auto_now_add=True) #when model was created
-
+    active = models.BooleanField(default=True)
     #empty_timestamp = models.DateTimeField(auto_now_add=False, auto_now=False)  # we can set our own date
 
+    objects = KirrURLManager()  #hooking up this class to its modelmanager
+   # some_random = KirrURLManager()
     #over-riding inbuilt save method
     def save(self, *args, **kwargs):
         # print ("something")
