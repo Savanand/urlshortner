@@ -18,9 +18,17 @@ from django.contrib import admin
 
 from shortener.views import kirr_redirect_FBV, KirrRedirectCBView  # for Django 1.10 this is required
 
+# DO NOT USE LIKE THIS BELOW with like as older DJANGO versions
+# from shortener import views
+# from another_app.views import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^view-1/$', kirr_redirect_FBV),
-    url(r'^view-2/$', KirrRedirectCBView.as_view()),
+    url(r'^a/(?P<shortcode>[\w-]+)/$', kirr_redirect_FBV),
+    url(r'^b/(?P<shortcode>[\w-]+)/$', KirrRedirectCBView.as_view()),
+        # refer https://github.com/codingforentrepreneurs/Guides/blob/master/all/common_url_regex.md
 
+    # DO NOT USE LIKE THIS BELOW with like as older DJANGO versions
+    # url(r'^view-2/$', 'shortener.views.KirrRedirectCBView'),
+    # url(r'^view-2/$', views.KirrRedirectCBView),
 ]
