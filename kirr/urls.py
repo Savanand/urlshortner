@@ -16,6 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from shortener.views import kirr_redirect_FBV, KirrRedirectCBView  # for Django 1.10 this is required
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^view-1/$', kirr_redirect_FBV),
+    url(r'^view-2/$', KirrRedirectCBView.as_view()),
+
 ]
