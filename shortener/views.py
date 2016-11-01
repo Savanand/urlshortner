@@ -1,12 +1,30 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 
 
 from .models import KirrURL
 
-
 # Create your views here.
+def test_view(requst, shortcode=None, *args, **kwargs):
+    return HttpResponse("Some about response")
+
+def kirr_redirect_FBV(request, shortcode=None, *args, **kwargs): # function based view
+    obj = get_object_or_404(KirrURL, shortcode=shortcode)
+    print ('Url=',obj.url)
+    return HttpResponseRedirect(obj.url)
+
+class KirrRedirectCBView(View):  #class based view  you've to explicity write method you want to call
+    def get(self, request, shortcode=None, *args, **kwargs):
+        obj = get_object_or_404(KirrURL, shortcode=shortcode)
+        print ('Url=',obj.url)
+        return HttpResponseRedirect(obj.url)
+
+    def post(self, request, *args, **kwargs):
+        return HttpResponse()
+
+
+'''
 def kirr_redirect_FBV(request, shortcode=None, *args, **kwargs): # function based view
     # print(request.user, request.user.is_authenticated())
     # print(args, kwargs)
@@ -40,3 +58,4 @@ class KirrRedirectCBView(View):  #class based view  you've to explicity write me
 
     def post(self, request, *args, **kwargs):
         return HttpResponse()
+'''
