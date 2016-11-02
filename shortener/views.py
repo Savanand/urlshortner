@@ -18,7 +18,7 @@ class HomeView(View):
     def get(self, request, *args, **kwargs):
         the_form = SubmitUrlForm()
         context = {
-            "title" : "Kirr URL",
+            "title" : "Kirr.co",
             "form" : the_form,
         }
         return render(request, "shortener/home.html", context)  #find ref at 1.8 project
@@ -32,7 +32,7 @@ class HomeView(View):
      #    print (request.POST.get("url"))
         form = SubmitUrlForm(request.POST)
         context = {
-            "title": "Kirr URL",
+            "title": "Kirr.co",
             "form": form,
         }
 
