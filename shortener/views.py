@@ -30,6 +30,7 @@ class HomeView(View):
      #    print (request.POST.get("url"))
         form = SubmitUrlForm(request.POST)
         if form.is_valid():
+            # print ("in post method")
             print(form.cleaned_data)
         context = {
             "title": "Kirr URL",
