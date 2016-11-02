@@ -29,14 +29,27 @@ class HomeView(View):
      #    print (request.POST["url"])
      #    print (request.POST.get("url"))
         form = SubmitUrlForm(request.POST)
-        if form.is_valid():
-            # print ("in post method")
-            print(form.cleaned_data)
         context = {
             "title": "Kirr URL",
             "form": form,
         }
-        return  render(request, "shortener/home.html", context)
+
+        template = "shortener/home.html"
+        if form.is_valid():
+            # print ("in post method")
+            # print(form.cleaned_data)
+            new_url = form.cleaned_data.get("url")
+            obj, created = KirrURL.objects.get_or_create(url=new_url)
+            context = {
+                "object" : obj,
+                "created" : created,
+            }
+            if created:
+                template = "shortener/success.html"
+            else:
+                template = "shortener/already-exists.html"
+
+        return  render(request, template, context)
 
 class KirrRedirectCBView(View):  #class based view  you've to explicity write method you want to call
     def get(self, request, shortcode=None, *args, **kwargs):
