@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ title }}</title>
 </head>
-<div>
     <div style="width: 800px; margin:0 auto;">
-        <h1>Hi There from home</h1>
+        <h1>{{ title }}</h1>
         <form method="POST" action="."> {% csrf_token %}
-            <input name="url" type="text" placeholder="Place url like http://www.google.com ">
+            <!--<input name="url" type="text" placeholder="Place url like http://www.google.com ">-->
+            {{ form.as_p}}
             <input type="submit" value="Shorten">
         </form>
     </div>

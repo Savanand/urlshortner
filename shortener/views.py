@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 
-
+from .forms import SubmitUrlForm
 from .models import KirrURL
 
 
@@ -14,16 +14,28 @@ def home_view_fbv(request, *args, **kwargs):  # fbv for home just for if
 
 class HomeView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, "shortener/home.html",{})  #find ref at 1.8 project
+        the_form = SubmitUrlForm()
+        context = {
+            "title" : "Kirr URL",
+            "form" : the_form,
+        }
+        return render(request, "shortener/home.html", context)  #find ref at 1.8 project
 
     def post(self, request, *args, **kwargs):
-        some_dict = {}
-     #   some_dict['url'] #error
-        some_dict.get('url', 'http://www.google.com') #if none
-        print (request.POST)
-        print (request.POST["url"])
-        print (request.POST.get("url"))
-        return  render(request, "shortener/home.html", {})
+     #    some_dict = {}
+     # #   some_dict['url'] #error
+     #    some_dict.get('url', 'http://www.google.com') #if none
+     #    print (request.POST)
+     #    print (request.POST["url"])
+     #    print (request.POST.get("url"))
+        form = SubmitUrlForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+        context = {
+            "title": "Kirr URL",
+            "form": form,
+        }
+        return  render(request, "shortener/home.html", context)
 
 class KirrRedirectCBView(View):  #class based view  you've to explicity write method you want to call
     def get(self, request, shortcode=None, *args, **kwargs):
