@@ -6,11 +6,24 @@ from django.views import View
 from .models import KirrURL
 
 
+def home_view_fbv(request, *args, **kwargs):  # fbv for home just for if
+    if request.method == "POST":
+        print (request.method)
+    return render(request, "shortener/home.html", {})
+
 
 class HomeView(View):
     def get(self, request, *args, **kwargs):
         return render(request, "shortener/home.html",{})  #find ref at 1.8 project
 
+    def post(self, request, *args, **kwargs):
+        some_dict = {}
+     #   some_dict['url'] #error
+        some_dict.get('url', 'http://www.google.com') #if none
+        print (request.POST)
+        print (request.POST["url"])
+        print (request.POST.get("url"))
+        return  render(request, "shortener/home.html", {})
 
 class KirrRedirectCBView(View):  #class based view  you've to explicity write method you want to call
     def get(self, request, shortcode=None, *args, **kwargs):
