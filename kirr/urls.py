@@ -16,7 +16,9 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from shortener.views import kirr_redirect_FBV, KirrRedirectCBView, test_view  # for Django 1.10 this is required
+# from shortener.views import kirr_redirect_FBV, KirrRedirectCBView, test_view  # for Django 1.10 this is required
+
+from shortener.views import HomeView, KirrRedirectCBView
 
 # DO NOT USE LIKE THIS BELOW with like as older DJANGO versions
 # from shortener import views
@@ -24,9 +26,11 @@ from shortener.views import kirr_redirect_FBV, KirrRedirectCBView, test_view  # 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^about123/$', test_view),
-    url(r'^(?P<shortcode>[\w-]+){6,15}$', kirr_redirect_FBV),
-    url(r'^b/(?P<shortcode>[\w-]+){6,15}$', KirrRedirectCBView.as_view()),
+    url(r'^$', HomeView.as_view()),
+
+    # url(r'^about123/$', test_view),
+    # url(r'^(?P<shortcode>[\w-]+){6,15}$', kirr_redirect_FBV),
+    url(r'^(?P<shortcode>[\w-]+){6,15}/$', KirrRedirectCBView.as_view()),
         # refer https://github.com/codingforentrepreneurs/Guides/blob/master/all/common_url_regex.md
 
     # DO NOT USE LIKE THIS BELOW with like as older DJANGO versions

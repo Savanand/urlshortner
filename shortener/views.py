@@ -5,24 +5,33 @@ from django.views import View
 
 from .models import KirrURL
 
-# Create your views here.
-def test_view(requst, shortcode=None, *args, **kwargs):
-    return HttpResponse("Some about response")
 
-def kirr_redirect_FBV(request, shortcode=None, *args, **kwargs): # function based view
-    obj = get_object_or_404(KirrURL, shortcode=shortcode)
-    print ('Url=',obj.url)
-    return HttpResponseRedirect(obj.url)
+
+class HomeView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "shortener/home.html",{})  #find ref at 1.8 project
+
 
 class KirrRedirectCBView(View):  #class based view  you've to explicity write method you want to call
     def get(self, request, shortcode=None, *args, **kwargs):
         obj = get_object_or_404(KirrURL, shortcode=shortcode)
-        print ('Url=',obj.url)
+        # print ('Url=',obj.url)
         return HttpResponseRedirect(obj.url)
 
-    def post(self, request, *args, **kwargs):
-        return HttpResponse()
 
+# # Create your views here.
+# def test_view(requst, shortcode=None, *args, **kwargs):
+#     return HttpResponse("Some about response")
+#
+# def kirr_redirect_FBV(request, shortcode=None, *args, **kwargs): # function based view
+#     obj = get_object_or_404(KirrURL, shortcode=shortcode)
+#     print ('Url=',obj.url)
+#     return HttpResponseRedirect(obj.url)
+
+
+    # def post(self, request, *args, **kwargs):
+    #     return HttpResponse()
+    #
 
 '''
 def kirr_redirect_FBV(request, shortcode=None, *args, **kwargs): # function based view
