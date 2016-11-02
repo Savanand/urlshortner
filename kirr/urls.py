@@ -30,7 +30,7 @@ urlpatterns = [
 
     # url(r'^about123/$', test_view),
     # url(r'^(?P<shortcode>[\w-]+){6,15}$', kirr_redirect_FBV),
-    url(r'^(?P<shortcode>[\w-]+){6,15}/$', KirrRedirectCBView.as_view()),
+    url(r'^(?P<shortcode>[\w-]+)/$', KirrRedirectCBView.as_view(), name='scode'),
         # refer https://github.com/codingforentrepreneurs/Guides/blob/master/all/common_url_regex.md
 
     # DO NOT USE LIKE THIS BELOW with like as older DJANGO versions
