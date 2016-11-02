@@ -2,6 +2,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 
+from analytics.models import ClickEvent
+
 from .forms import SubmitUrlForm
 from .models import KirrURL
 
@@ -51,10 +53,11 @@ class HomeView(View):
 
         return  render(request, template, context)
 
-class KirrRedirectCBView(View):  #class based view  you've to explicity write method you want to call
+class URLRedirectView(View):  #class based view  you've to explicity write method you want to call
     def get(self, request, shortcode=None, *args, **kwargs):
         obj = get_object_or_404(KirrURL, shortcode=shortcode)
         # print ('Url=',obj.url)
+        print ("in URLRedirectView ", ClickEvent.objects.create_event(obj))
         return HttpResponseRedirect(obj.url)
 
 

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     #third party apps
     'django_hosts',
     #custom apps
+    'analytics',
     'shortener',
 ]
 
